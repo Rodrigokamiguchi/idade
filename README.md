@@ -1,6 +1,5 @@
-# Sobre
+# About
 
-É uma aplicação em python que calcula a idade da pessoa em relação ao ano atual e retornando o valor da idade dele em anos, dias e em dias bissextos.
-A biblioteca utilizada para interação grafica foi a tkinter.
+This is a Python application that calculates a person's age in relation to the current year, returning the age in years, days, and leap days. The graphical user interface library used is tkinter.
 
 ![image](https://github.com/user-attachments/assets/acfb53f8-8655-4d10-8781-2bdc166fac94)
