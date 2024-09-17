@@ -1,55 +1,58 @@
 import tkinter as tk
 from tkinter import messagebox
 
-def calcular_idade(ano_atual, ano_nascimento):
-    return ano_atual - ano_nascimento
-def calcular_idade_em_dias(idade):
-    return idade * 365
+def calculate_age(current_year, birth_year):
+    return current_year - birth_year
 
-def ano_bissexto(ano):
-    return (ano % 4 == 0 and ano% 100 != 0) or (ano % 400 == 0)
+def calculate_age_in_days(age):
+    return age * 365
 
-def calcular_dias_com_bissexto(ano_atual, ano_nascimento):
-    idade = calcular_idade(ano_atual, ano_nascimento)
-    anos_bissextos = sum(1 for ano in range(ano_nascimento, ano_atual + 1) if ano_bissexto(ano))
-    dias = (idade * 365) + anos_bissextos
-    return idade, dias
-def calcular():
+def leap_year(year):
+    return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+
+def calculate_days_with_leap_years(current_year, birth_year):
+    age = calculate_age(current_year, birth_year)
+    leap_years = sum(1 for year in range(birth_year, current_year + 1) if leap_year(year))
+    days = (age * 365) + leap_years
+    return age, days
+
+def calculate():
     try:
-        ano_atual = int(entry_ano_atual.get())
-        ano_nascimento = int(entry_ano_nascimento.get())
+        current_year = int(entry_current_year.get())
+        birth_year = int(entry_birth_year.get())
 
-        if ano_nascimento > ano_atual:
-            messagebox.showerror("Erro", "O ano de nascimento é maior que o ano atual")
+        if birth_year > current_year:
+            messagebox.showerror("Error", "The birth year is greater than the current year.")
             return
-        idade = calcular_idade(ano_atual, ano_nascimento)
-        dias_sem_bissexto = calcular_idade_em_dias(idade)
-        idade_bissexto, dias_com_bissexto = calcular_dias_com_bissexto(ano_atual, ano_nascimento)
+        age = calculate_age(current_year, birth_year)
+        days_without_leap_years = calculate_age_in_days(age)
+        age_with_leap_years, days_with_leap_years = calculate_days_with_leap_years(current_year, birth_year)
 
         output_display.delete(1.0, tk.END)
-        output_display.insert(tk.END, f"Sua idade é: {idade} anos\n")
-        output_display.insert(tk.END, f"Idade em dias (sem bissextos): {dias_sem_bissexto} dias\n")
-        output_display.insert(tk.END, f"Idade em dias (com bissextos): {dias_com_bissexto} dias\n")
+        output_display.insert(tk.END, f"Your age is: {age} years\n")
+        output_display.insert(tk.END, f"Age in days (without leap years): {days_without_leap_years} days\n")
+        output_display.insert(tk.END, f"Age in days (with leap years): {days_with_leap_years} days\n")
 
     except ValueError:
-        messagebox.showerror("Erro", "Por favor, insira um número válido.")
+        messagebox.showerror("Error", "Please enter a valid number.")
+
 root = tk.Tk()
-root.title("Calculadora de idade")
+root.title("Age Calculator")
 
-label_ano_atual = tk.Label(root, text="Ano atual:")
-label_ano_atual.grid(row=0, column=0, padx=10, pady=10)
+label_current_year = tk.Label(root, text="Current year:")
+label_current_year.grid(row=0, column=0, padx=10, pady=10)
 
-entry_ano_atual = tk.Entry(root)
-entry_ano_atual.grid(row=0, column=1, padx=10, pady=10)
+entry_current_year = tk.Entry(root)
+entry_current_year.grid(row=0, column=1, padx=10, pady=10)
 
-label_ano_nascimento = tk.Label(root, text="Ano nascimento:")
-label_ano_nascimento.grid(row=1, column=0, padx=10, pady=10)
+label_birth_year = tk.Label(root, text="Birth year:")
+label_birth_year.grid(row=1, column=0, padx=10, pady=10)
 
-entry_ano_nascimento = tk.Entry(root)
-entry_ano_nascimento.grid(row=1, column=1, padx=10, pady=10)
+entry_birth_year = tk.Entry(root)
+entry_birth_year.grid(row=1, column=1, padx=10, pady=10)
 
-btn_calcular = tk.Button(root, text="calcular", command=calcular)
-btn_calcular.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
+btn_calculate = tk.Button(root, text="Calculate", command=calculate)
+btn_calculate.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
 
 output_display = tk.Text(root, height=6, width=40)
 output_display.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
